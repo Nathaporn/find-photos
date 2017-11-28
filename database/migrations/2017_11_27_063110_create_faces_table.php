@@ -16,7 +16,7 @@ class CreateFacesTable extends Migration
         Schema::create('faces', function (Blueprint $table) {
             $table->increments('id');
             $table->string('face');
-            $table->integer('owner_id');
+            $table->integer('owner_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('owner_id')
