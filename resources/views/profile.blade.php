@@ -19,7 +19,10 @@
                     <td>Gender : {{ $user->gender }}</td>
                   </tr>
                   <tr>
-                    <td><button href="{{ url('/profile/update') }}" class="btn btn-small btn-primary">Edit Profile</button></td>
+                    <td><a href="{{ route('editprofile') }}" >
+                          <button type="button" class="btn btn-small btn-primary">Edit Profile</button>
+                        </a>
+                    </td>
                   </tr>
                 </table>
             </div>
