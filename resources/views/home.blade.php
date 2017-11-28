@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Search</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -35,7 +36,7 @@
                         </tr>
                         <tr>
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                          <input type="search" class="pull-right btn btn-small btn-primary">
+                          <input type="submit" value="search" class="pull-right btn btn-small btn-primary">
                         </tr>
                       </table>
                     </form>
@@ -44,4 +45,5 @@
         </div>
     </div>
 </div>
+
 @endsection

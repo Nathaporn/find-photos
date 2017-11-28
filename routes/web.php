@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/profile', 'UserController@profile')->name('profile');
-Route::post('/profile', 'UserController@update_avatar');
+Route::post('/profile', 'UserController@update_profile');
+Route::get('/profile/update', 'UserController@edit_profile')->name('edit_profile');
 
 Auth::routes();
 
