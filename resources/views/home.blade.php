@@ -33,6 +33,13 @@
                         <input type="radio" name="gender" value="male" checked> Male
                         <input type="radio" name="gender" value="female"> Female
                       </div>
+                      <div class="form-control">
+                        <label for="source">Select source of photos</label>
+                        <select class="form-control" id="source">
+                          <option>Facebook</option>
+                          <option>Siam2Night</option>
+                        </select>
+                      </div>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="submit" value="search" class="pull-right btn btn-block btn-primary">
                     </form>

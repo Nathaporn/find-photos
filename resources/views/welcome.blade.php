@@ -13,8 +13,8 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-color: #474e5d;
+                color: #fff;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
@@ -50,7 +50,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -78,17 +78,14 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Find Photos
+                <div class="container-fluid bg-1 text-center">
+                  <div class="title m-b-md">
+                      Find the Photos
+                  </div>
+                  <img src="/uploads/avatars/default.jpg" style="width:350px; height:350px; border-radius:50%; " alt="Who">
+                  <h3>Whose photos do you want to find?</h3>
                 </div>
-
-                <!--<div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>-->
+                
             </div>
         </div>
     </body>
