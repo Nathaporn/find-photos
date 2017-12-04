@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Search</div>
+                <div class="panel-heading"><h4>Search</h4></div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -15,30 +15,26 @@
                         </div>
                     @endif
 
+                    <h4>Upload Target's Photo</h4>
                     <form enctype="multipart/form-data" action="/home" method="POST">
-                      <label>Upload Target's Photo</lable>
-                      <table>
-                        <tr>
-                          <input type="file" name="target">
-                        </tr>
-                        <tr>
-                          <td>Name : </td>
-                          <td><input type="text" name="name"></td>
-                        </tr>
-                        <tr>
-                          <td>Age : </td>
-                          <td><input type="number" name="age" min="1"></td>
-                        </tr>
-                        <tr>
-                          <td>Gender : </td>
-                          <td><input type="radio" name="gender" value="male" checked> Male</td>
-                          <td><input type="radio" name="gender" value="female"> Female</td>
-                        </tr>
-                        <tr>
-                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                          <input type="submit" value="search" class="pull-right btn btn-small btn-primary">
-                        </tr>
-                      </table>
+                      <div class="form-group">
+                        <input type="file" name="target">
+                      </div>
+                      <div class="form-group">
+                        <label for="name" >Name</label>
+                        <input type="text" name="name" placeholder="Enter Name" id="inputName" class="form-control" placeholder="Your Name" autofocus>
+                      </div>
+                      <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" name="age" placeholder="Enter Age" min=1 id="inputAge" class="form-control" placeholder="Your Age" autofocus>
+                      </div>
+                      <div class="form-group">
+                        <label for="gender">Gender </label>
+                        <input type="radio" name="gender" value="male" checked> Male
+                        <input type="radio" name="gender" value="female"> Female
+                      </div>
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" value="search" class="pull-right btn btn-block btn-primary">
                     </form>
                 </div>
             </div>
