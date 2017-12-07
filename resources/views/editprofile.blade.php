@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="{{ asset('css/background.css') }}" rel="stylesheet">
+
 <div class="container" id="profile">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <div class="panel panel-default">
+          <div class="panel">
             <div class="panel-heading"><h3>Update Your Profile</h3></div>
 
             <div class="panel-body">
@@ -12,7 +14,7 @@
                 <div class="form-group">
                   <input type="file" name="avatar">
                 </div>
-                
+
                 <div class="form-group">
                   <label for="name" >Name</label>
                   <input type="text" name="name" value="{{$user->name}}" id="inputName" class="form-control" placeholder="Your Name" required autofocus>

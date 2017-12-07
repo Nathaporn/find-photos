@@ -20,6 +20,6 @@ class Search extends Model
 
     public function target()
     {
-        return $this->hasOne('App\Target');
+        return $this->belongsTo('App\Target');
     }
 }

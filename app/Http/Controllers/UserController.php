@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use Image;
+use App\Search;
 
 class UserController extends Controller
 {
@@ -18,21 +19,17 @@ class UserController extends Controller
         return view('editprofile', array('user' => Auth::user()));
     }
 
-    public function update_avatar(Request $request){
+    public function history(){
+        $user = Auth::user();
+        $search = Search::where('user_id', $user->id)->get();
+        return view('history', array('user' => $user, 'search' => $search));
+    }
 
-      if($request->hasFile('avatar')){
-          $avatar = $request->file('avatar');
-          $user = Auth::user();
-          $name = $user->name;
-          $filename = $user->name . time() . '.' . $avatar->getClientOriginalExtension();
-          Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
-
-
-          $user->avatar = $filename;
-          $user->save();
-      }
-
-        return view('profile', array('user' => Auth::user()));
+    public function history_detail($id){
+      $user = Auth::user();
+      $search = Search::where('id', $id)->get();
+      return view('history', array('user' => $user, 'search' => $search));
+      //return view('history', array('user' => $user, 'search' => $search, 'id' => $id,));
     }
 
     public function update_profile(Request $request){

@@ -1,0 +1,11 @@
+.panel{
+  color: #fff;
+  background-color: #00264d;
+}
+.panel-heading{
+  background-color: #004d99;
+}
+#history_table{
+  color: #000;
+  background-color: #99ceff;
+}

@@ -15,6 +15,6 @@ class Target extends Model
 
     public function search()
     {
-       return $this->belongsTo('App\Search');
+       return $this->hasOne('App\Search');
     }
 }

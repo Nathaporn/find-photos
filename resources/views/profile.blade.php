@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="{{ asset('css/background.css') }}" rel="stylesheet">
+
 <div class="container" id="profile">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

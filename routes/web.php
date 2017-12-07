@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/profile/history', 'UserController@history')->name('history');
+Route::get('/profile/history/{id}', 'UserController@history_detail');
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::post('/profile', 'UserController@update_profile');
 Route::get('/profile/update', 'UserController@edit_profile')->name('editprofile');
