@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use File;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -62,10 +63,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $folder_name = 'users';
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        $path = public_path(). '/' . $folder_name . '/' . $user->id . '/targets';
+        File::makeDirectory($path, $mode = 0777, true, true);
+        return $user;
     }
 }

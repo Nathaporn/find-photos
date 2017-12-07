@@ -10,6 +10,11 @@ class Target extends Model
     protected $table = 'targets';
 
     protected $fillable = [
-        'photo',
+        'photo','name','age','gender',
     ];
+
+    public function search()
+    {
+       return $this->belongsTo('App\Search');
+    }
 }

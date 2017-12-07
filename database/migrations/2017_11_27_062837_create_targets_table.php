@@ -15,11 +15,11 @@ class CreateTargetsTable extends Migration
     {
         Schema::create('targets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('photo');
             $table->string('name');
             $table->integer('age');
             $table->string('gender');
             $table->timestamps();
+
         });
     }
 

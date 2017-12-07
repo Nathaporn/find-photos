@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Image;
+use Auth;
+use File;
+use App\Target;
+use App\Search;
 
 class HomeController extends Controller
 {
@@ -27,25 +31,37 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function upload_photo(Request $request){
+    public function search(Request $request){
         if($request->hasFile('target')){
-            $target = new \App\Target;
-            $id = $target->id;
+            $user = Auth::user();
             $photo = $request->file('target');
-            $filename = $id . '_' . time() . '.' . $photo->getClientOriginalExtension();
-            Image::make($photo)->save( public_path('/uploads/targets/' . $filename ) );
-
             $name = $request->input('name');
             $age = $request->input('age');
             $gender = $request->input('gender');
+            $filename = time() . '.' . $photo->getClientOriginalExtension();
 
-            $target->photo = $filename;
-            $target->name = $name;
-            $target->age = $age;
-            $target->gender = $gender;
+            $target = Target::create([
+                'name' => $name,
+                'age' => $age,
+                'gender' => $gender,
+            ]);
+
             $target->save();
+
+            $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/';
+            File::makeDirectory($path, $mode = 0777, true, true);
+            Image::make($photo)->save( public_path('users/'.$user->id.'/targets/'. $target->id . '/' . $filename ) );
+
+            $search = Search::create([
+              'user_id' => $user->id,
+              'target_id' => $target->id,
+            ]);
         }
 
       return view('home');
+  }
+
+  public function search_again(){
+    return view('home');
   }
 }

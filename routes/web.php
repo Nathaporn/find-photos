@@ -22,4 +22,4 @@ Route::get('/profile/update', 'UserController@edit_profile')->name('editprofile'
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home', 'HomeController@upload_photo');
+Route::post('/home', 'HomeController@search');
