@@ -33,6 +33,10 @@
                         <input type="radio" name="gender" value="male" checked> Male
                         <input type="radio" name="gender" value="female"> Female
                       </div>
+                      <div class="form-group">
+                        <label for="name">URL</label>
+                        <input type="text" name="url" placeholder="Source URL of photos" id="inputName" class="form-control" placeholder="Your Name" autofocus>
+                      </div>
                       <!--<div class="form-control">
                         <label for="source">Select source of photos</label>
                         <select class="form-control" id="source">

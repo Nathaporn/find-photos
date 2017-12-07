@@ -17,6 +17,7 @@ class CreateSearchTable extends Migration
           $table->increments('id');
           $table->integer('user_id')->unsigned();
           $table->integer('target_id')->unsigned();
+          $table->string('url');
           $table->timestamps();
 
           $table->foreign('user_id')

@@ -38,6 +38,7 @@ class HomeController extends Controller
             $name = $request->input('name');
             $age = $request->input('age');
             $gender = $request->input('gender');
+            $url = $request->input('url');
             $filename = time() . '.' . $photo->getClientOriginalExtension();
 
             $target = Target::create([
@@ -55,6 +56,7 @@ class HomeController extends Controller
             $search = Search::create([
               'user_id' => $user->id,
               'target_id' => $target->id,
+              'url' => $url,
             ]);
         }
 

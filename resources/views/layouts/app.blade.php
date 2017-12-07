@@ -53,6 +53,8 @@
 
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ route('profile') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
+                                    <li><a href="{{ route('profile') }}"> Search History</a></li>
+                                    <li class="divider"></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
