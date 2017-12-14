@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <link href="{{ asset('css/background.css') }}" rel="stylesheet">
 
 <div class="container">
