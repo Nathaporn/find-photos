@@ -24,4 +24,4 @@ Route::get('/profile/update', 'UserController@edit_profile')->name('editprofile'
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home', 'HomeController@search');
+Route::post('/home', 'HomeController@upload');

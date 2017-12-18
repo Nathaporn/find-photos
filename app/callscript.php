@@ -1,18 +1,4 @@
-<?php
-function helloPython() {
-  $.ajax({
-    type: "POST",
-    url: "spider.php",
-    data: { pyFunction: "helloPython",
-            uid: document.getElementById('uid').value,
-            tid: document.getElementById('tid').value,
-          }
-    }).done(function( msg ) {
-      //  alert( "Data Saved: " + msg );
-        alert( msg );
-    });
-  }
-
+<script>
   function runSpider() {
     $.ajax({
       type: "POST",
@@ -26,13 +12,13 @@ function helloPython() {
       });
     }
 
-    function saveFace() {
+    function saveFace($uid, $tid) {
       $.ajax({
         type: "POST",
         url: "spider.php",
         data: { pyFunction: "saveFace",
-                uid: document.getElementById('uid').value,
-                tid: document.getElementById('tid').value,
+                uid: $uid,
+                tid: $tid,
               }
         }).done(function( msg ) {
           //  alert( "Data Saved: " + msg );
@@ -67,4 +53,4 @@ function helloPython() {
             alert( msg );
         });
     }
- ?>
+    </script>

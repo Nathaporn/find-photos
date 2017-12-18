@@ -66,4 +66,4 @@ for filename in glob.glob(path + 'testImage/*.jpg'): # training
 if __name__ == "__main__":
     uid = sys.argv[1]
     tid = sys.argv[2]
-    predictSiam2nite("%s/users/%s/target/%s/" % (os.getcwd(),uid,tid))
+    predictSiam2nite("%s/users/%s/targets/%s/" % (os.getcwd(),uid,tid))

@@ -20,4 +20,4 @@ def trainingImage(path):
 if __name__ == "__main__":
     uid = sys.argv[1]
     tid = sys.argv[2]
-    trainingImage("%s/users/%s/target/%s/" % (os.getcwd(),uid,tid))
+    trainingImage("%s/users/%s/targets/%s/" % (os.getcwd(),uid,tid))

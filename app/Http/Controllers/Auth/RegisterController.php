@@ -71,6 +71,8 @@ class RegisterController extends Controller
         ]);
         $path = public_path(). '/' . $folder_name . '/' . $user->id . '/targets';
         File::makeDirectory($path, $mode = 0777, true, true);
+        $path = public_path(). '/' . $folder_name . '/' . $user->id . '/uploads';
+        File::makeDirectory($path, $mode = 0777, true, true);
         return $user;
     }
 }
