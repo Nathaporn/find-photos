@@ -23,21 +23,8 @@
                         <input type="file" name="target">
                       </div>
                       <div class="form-group">
-                        <label for="name" >Name</label>
-                        <input type="text" name="name" placeholder="Enter Name" id="inputName" class="form-control" placeholder="Your Name" autofocus>
-                      </div>
-                      <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" name="age" placeholder="Enter Age" min=1 id="inputAge" class="form-control" placeholder="Your Age" autofocus>
-                      </div>
-                      <div class="form-group">
-                        <label for="gender">Gender </label>
-                        <input type="radio" name="gender" value="male" checked> Male
-                        <input type="radio" name="gender" value="female"> Female
-                      </div>
-                      <div class="form-group">
                         <label for="name">URL</label>
-                        <input type="text" name="url" placeholder="Source URL of photos" id="inputName" class="form-control" placeholder="Your Name" autofocus>
+                        <input type="text" name="url" placeholder="Source URL of photos" id="inputName" class="form-control" autofocus>
                       </div>
                       <!--<div class="form-control">
                         <label for="source">Select source of photos</label>

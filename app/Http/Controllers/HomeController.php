@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use Image;
 use Auth;
 use File;
@@ -34,6 +35,7 @@ class HomeController extends Controller
       $cmd = "python $pyscript 1 19";
       exec("$cmd", $output);
       echo "$output[0]";*/
+
         return view('home');
     }
 
@@ -72,14 +74,14 @@ class HomeController extends Controller
     }
 
     public function search(Request $request){
-        if($request->hasFile('target')){
             $user = Auth::user();
-            $photo = $request->file('target');
+            $photo = $request->input('photo');
             $name = $request->input('name');
             $age = $request->input('age');
             $gender = $request->input('gender');
-            $url = $request->input('url');
-            $filename = time() . '.' . $photo->getClientOriginalExtension();
+            $search_id = $request->input('search_id');
+
+            $path_splt = explode ("/",$photo);
 
             $target = Target::create([
                 'name' => $name,
@@ -89,7 +91,8 @@ class HomeController extends Controller
 
             $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/train/';
             File::makeDirectory($path, $mode = 0777, true, true);
-            Image::make($photo)->save( public_path('users/'.$user->id.'/targets/'. $target->id . '/train/' . $filename ) );
+            copy($photo, 'users/'.$user->id.'/targets/'. $target->id . '/train/' . $path_splt[count($path_splt)-1]);
+            //Image::make($photo)->save( public_path('users/'.$user->id.'/targets/'. $target->id . '/train/' . $filename ) );
 
             $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/match/';
             File::makeDirectory($path, $mode = 0777, true, true);
@@ -97,18 +100,20 @@ class HomeController extends Controller
             $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/unmatch/';
             File::makeDirectory($path, $mode = 0777, true, true);
 
-            $search = Search::create([
-              'user_id' => $user->id,
-              'target_id' => $target->id,
-              'url' => $url,
-            ]);
+            $search = Search::where('id', $search_id)->first();
+            $search->target_id = $target->id;
+            $search->save();
 /*
             $pyscript = '../app/python/saveFace.py';
           //  $python = 'C:\Users\USER\AppData\Local\Programs\Python\Python36-32\python.exe';
             $cmd = "python $pyscript $user->id $target->id";
             exec("$cmd", $output);
             echo "$output[0]";*/
-          }
+
+            $pyscript = '../app/python/training.py';
+            $cmd = "python $pyscript $user->id $target->id";
+            exec("$cmd", $output);
+            print($output[0]);
 
       return view('home');
   }

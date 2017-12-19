@@ -25,3 +25,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@upload');
+Route::post('/home/result', 'HomeController@search');
