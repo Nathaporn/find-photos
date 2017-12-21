@@ -7,8 +7,10 @@ use App\Http\Requests;
 use Image;
 use Auth;
 use File;
-use App\Target;
 use App\Search;
+use App\Target;
+use App\Upload;
+use App\URL;
 
 class HomeController extends Controller
 {
@@ -43,31 +45,25 @@ class HomeController extends Controller
         if($request->hasFile('target')){
             $user = Auth::user();
             $photo = $request->file('target');
-            $name = $request->input('name');
-            $age = $request->input('age');
-            $gender = $request->input('gender');
-            $url = $request->input('url');
             $filename = time() . '.' . $photo->getClientOriginalExtension();
 
-            $search = Search::create([
+            $upload = Upload::create([
               'user_id' => $user->id,
-              'target_id' => 1,
-              'url' => $url,
             ]);
 
-            $path = public_path(). '/users/'.$user->id.'/uploads/'. $search->id . '/train/';
+            $path = public_path(). '/users/'.$user->id.'/uploads/'. $upload->id . '/train/';
             File::makeDirectory($path, $mode = 0777, true, true);
-            Image::make($photo)->save( public_path('users/'.$user->id.'/uploads/'. $search->id . '/train/' . $filename ) );
+            Image::make($photo)->save( public_path('users/'.$user->id.'/uploads/'. $upload->id . '/train/' . $filename ) );
 
-            $path = public_path(). '/users/'.$user->id.'/uploads/'. $search->id . '/found/';
+            $path = public_path(). '/users/'.$user->id.'/uploads/'. $upload->id . '/found/';
             File::makeDirectory($path, $mode = 0777, true, true);
 
             $pyscript = '../app/python/saveFace.py';
           //  $python = 'C:\Users\USER\AppData\Local\Programs\Python\Python36-32\python.exe';
-            $cmd = "python $pyscript $user->id $search->id";
+            $cmd = "python $pyscript $user->id $upload->id";
             exec("$cmd", $output);
 
-            return view('face', array('user' => Auth::user(), 'search_id' => $search->id, 'output' => $output[0]));
+            return view('face', array('user' => $user, 'upload_id' => $upload->id, 'output' => $output[0]));
         }
 
         return view('home');
@@ -79,7 +75,8 @@ class HomeController extends Controller
             $name = $request->input('name');
             $age = $request->input('age');
             $gender = $request->input('gender');
-            $search_id = $request->input('search_id');
+            $upload_id = $request->input('upload_id');
+            $url = $request->input('url');
 
             $path_splt = explode ("/",$photo);
 
@@ -100,9 +97,21 @@ class HomeController extends Controller
             $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/unmatch/';
             File::makeDirectory($path, $mode = 0777, true, true);
 
-            $search = Search::where('id', $search_id)->first();
-            $search->target_id = $target->id;
-            $search->save();
+            $url_row = URL::where('url', $url)->get();
+            if(count($url_row)==0){
+              $url_row = URL::create([
+                'url' => $url,
+              ]);
+            }else{
+              $url_row = $url_row[0];
+            }
+
+            $search = Search::create([
+              'user_id' => $user->id,
+              'target_id' => $target->id,
+              'url_id' => $url_row->id,
+            ]);
+
 /*
             $pyscript = '../app/python/saveFace.py';
           //  $python = 'C:\Users\USER\AppData\Local\Programs\Python\Python36-32\python.exe';

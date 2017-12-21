@@ -22,10 +22,6 @@
                       <div class="form-group">
                         <input type="file" name="target">
                       </div>
-                      <div class="form-group">
-                        <label for="name">URL</label>
-                        <input type="text" name="url" placeholder="Source URL of photos" id="inputName" class="form-control" autofocus>
-                      </div>
                       <!--<div class="form-control">
                         <label for="source">Select source of photos</label>
                         <select class="form-control" id="source">

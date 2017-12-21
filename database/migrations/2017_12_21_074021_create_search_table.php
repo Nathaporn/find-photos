@@ -17,7 +17,8 @@ class CreateSearchTable extends Migration
           $table->increments('id');
           $table->integer('user_id')->unsigned();
           $table->integer('target_id')->unsigned();
-          $table->string('url');
+          $table->integer('url_id')->unsigned();
+          $table->string('result')->default('not found');
           $table->timestamps();
 
           $table->foreign('user_id')
@@ -25,6 +26,9 @@ class CreateSearchTable extends Migration
             ->onDelete('cascade');
           $table->foreign('target_id')
             ->references('id')->on('targets')
+            ->onDelete('cascade');
+          $table->foreign('url_id')
+            ->references('id')->on('urls')
             ->onDelete('cascade');
         });
     }

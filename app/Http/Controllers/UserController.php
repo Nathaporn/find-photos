@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function history(){
         $user = Auth::user();
-        $search = Search::where('user_id', $user->id)->get();
+        $search = $user->searches;
         return view('history', array('user' => $user, 'search' => $search));
     }
 

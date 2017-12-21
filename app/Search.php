@@ -10,7 +10,7 @@ class Search extends Model
     protected $table = 'search';
 
     protected $fillable = [
-        'user_id','target_id','url',
+        'user_id','target_id','url_id','result',
     ];
 
     public function user()
@@ -21,5 +21,10 @@ class Search extends Model
     public function target()
     {
         return $this->belongsTo('App\Target');
+    }
+
+    public function url()
+    {
+        return $this->belongsTo('App\URL');
     }
 }

@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Search');
     }
+
+    public function uploads()
+    {
+        return $this->hasMany('App\Upload');
+    }
 }

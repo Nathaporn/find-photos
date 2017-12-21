@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel">
-                <div class="panel-heading"><h4>Search</h4></div>
+                <div class="panel-heading"><h4>Whose photo do you want to search?</h4></div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -17,10 +17,9 @@
                         </div>
                     @endif
 
-                    Search id: {{$search_id}}
                     <br>
                     <?php
-                      $dir = glob("./users/$user->id/uploads/$search_id/found/*.*");
+                      $dir = glob("./users/$user->id/uploads/$upload_id/found/*.*");
                     ?>
                         @if (count($dir)==0)
                             Sorry, face not found.
@@ -52,8 +51,12 @@
                                     <input type="radio" name="gender" value="male" checked> Male
                                     <input type="radio" name="gender" value="female"> Female
                                   </div>
+                                  <div class="form-group">
+                                    <label for="name">URL</label>
+                                    <input type="text" name="url" placeholder="Source URL of photos" id="inputName" class="form-control" autofocus>
+                                  </div>
                                   <input type="hidden" name="photo" value={{$value}}>
-                                  <input type="hidden" name="search_id" value={{$search_id}}>
+                                  <input type="hidden" name="upload_id" value={{$upload_id}}>
                                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                   <input type="submit" value="search" class="pull-left btn btn-primary">
                                 </form>
