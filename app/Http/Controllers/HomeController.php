@@ -31,6 +31,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+      $url = 'https://www.siam2nite.com/en/pictures/onyx-presents-aquafest-2017-at-onyx-18859';
+      $pyscript = '../app/python/siam2nite.py';
+      $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/1.csv";
+      exec("$cmd", $output);
+      
+    /*  $pyscript = '../app/python/predictSiam2nite.py';
+      $cmd = "python $pyscript 1 13";
+      exec("$cmd", $output);
+        echo "$output[0]";*/
       /*
       $pyscript = '../app/python/saveFace.py';
     //  $python = 'C:\Users\USER\AppData\Local\Programs\Python\Python36-32\python.exe';
@@ -59,7 +68,6 @@ class HomeController extends Controller
             File::makeDirectory($path, $mode = 0777, true, true);
 
             $pyscript = '../app/python/saveFace.py';
-          //  $python = 'C:\Users\USER\AppData\Local\Programs\Python\Python36-32\python.exe';
             $cmd = "python $pyscript $user->id $upload->id";
             exec("$cmd", $output);
 
@@ -102,6 +110,11 @@ class HomeController extends Controller
               $url_row = URL::create([
                 'url' => $url,
               ]);
+              $csv_name = $url_row->id . '.csv';
+              $pyscript = '../app/python/siam2nite.py';
+              print($url+" "+getcwd() );
+              $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/1.csv";
+              exec("$cmd", $output);
             }else{
               $url_row = $url_row[0];
             }
@@ -112,19 +125,14 @@ class HomeController extends Controller
               'url_id' => $url_row->id,
             ]);
 
-/*
-            $pyscript = '../app/python/saveFace.py';
-          //  $python = 'C:\Users\USER\AppData\Local\Programs\Python\Python36-32\python.exe';
-            $cmd = "python $pyscript $user->id $target->id";
-            exec("$cmd", $output);
-            echo "$output[0]";*/
-
             $pyscript = '../app/python/training.py';
             $cmd = "python $pyscript $user->id $target->id";
             exec("$cmd", $output);
             print($output[0]);
 
-      return view('home');
+
+
+      return view('result');
   }
 
   public function search_again(){

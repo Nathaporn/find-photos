@@ -5,7 +5,7 @@ if($_POST['pyFunction'] == "runSiam2nite"){
   $pyscript = './python/siam2nite.py';
   #$url = 'https://www.siam2nite.com/en/pictures/onyx-presents-aquafest-2017-at-onyx-18859';
   $url = $_POST['url'];
-  $cmd = "scrapy runspider $pyscript -a url=$url -o ./users/$uid/target/$tid/temp.csv";
+  $cmd = "scrapy runspider $pyscript -a url=$url -o ./users/$uid/targets/$tid/temp.csv";
   exec("$cmd", $output);
   print($output[0]);
 }

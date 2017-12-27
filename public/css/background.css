@@ -17,5 +17,19 @@
 #search_table{
   background-color: #b3daff;
   color: #000;
-  margin-right: 50px; 
+  margin-right: 50px;
+}
+
+.thumnails{
+  width: 30%;
+  float: left;
+  margin: 10px;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.small_img{
+  width: 100%;
+  height: auto;
 }
