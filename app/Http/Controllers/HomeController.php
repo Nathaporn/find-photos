@@ -31,11 +31,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $url = 'https://www.siam2nite.com/en/pictures/onyx-presents-aquafest-2017-at-onyx-18859';
+      // $pyscript = '../app/python/predictSiam2nite.py';
+      // $cmd = "python $pyscript 1 4 2.csv 5";
+      // exec("$cmd", $output1);
+      // print($output1[0]);
+      /*$url = 'https://www.siam2nite.com/en/pictures/onyx-presents-aquafest-2017-at-onyx-18859';
       $pyscript = '../app/python/siam2nite.py';
       $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/1.csv";
-      exec("$cmd", $output);
-      
+      exec("$cmd", $output);*/
+
     /*  $pyscript = '../app/python/predictSiam2nite.py';
       $cmd = "python $pyscript 1 13";
       exec("$cmd", $output);
@@ -84,7 +88,7 @@ class HomeController extends Controller
             $age = $request->input('age');
             $gender = $request->input('gender');
             $upload_id = $request->input('upload_id');
-            $url = $request->input('url');
+            $url = trim($request->input('url'));
 
             $path_splt = explode ("/",$photo);
 
@@ -105,19 +109,10 @@ class HomeController extends Controller
             $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/unmatch/';
             File::makeDirectory($path, $mode = 0777, true, true);
 
-            $url_row = URL::where('url', $url)->get();
-            if(count($url_row)==0){
-              $url_row = URL::create([
-                'url' => $url,
-              ]);
-              $csv_name = $url_row->id . '.csv';
-              $pyscript = '../app/python/siam2nite.py';
-              print($url+" "+getcwd() );
-              $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/1.csv";
-              exec("$cmd", $output);
-            }else{
-              $url_row = $url_row[0];
-            }
+            $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/result/';
+            File::makeDirectory($path, $mode = 0777, true, true);
+
+            $url_row = $this->getUrl($url);
 
             $search = Search::create([
               'user_id' => $user->id,
@@ -128,14 +123,72 @@ class HomeController extends Controller
             $pyscript = '../app/python/training.py';
             $cmd = "python $pyscript $user->id $target->id";
             exec("$cmd", $output);
-            print($output[0]);
+            //print($output[0]);
 
+            $pyscript = '../app/python/predictSiam2nite.py';
+            $cmd = "python $pyscript $user->id $target->id $url_row->csv $search->id";
+            exec("$cmd", $output1);
+            //print($output1[0]);
 
+            $search->result = $search->id.".csv";
+            $search->save();
 
-      return view('result');
+      return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'found' => $output1[0]));
   }
 
-  public function search_again(){
-    return view('home');
+  public function search_again(Request $request){
+    $user = Auth::user();
+    $target_id = $request->input('target_id');
+    $target = Target::where('id', $target_id)->first();
+    $url = trim($request->input('url'));
+
+    $url_row = $this->getUrl($url);
+
+    $search = Search::create([
+      'user_id' => $user->id,
+      'target_id' => $target->id,
+      'url_id' => $url_row->id,
+    ]);
+
+    $pyscript = '../app/python/training.py';
+    $cmd = "python $pyscript $user->id $target->id";
+    exec("$cmd", $output);
+    //print($output[0]);
+
+    $pyscript = '../app/python/predictSiam2nite.py';
+    $cmd = "python $pyscript $user->id $target->id $url_row->csv $search->id";
+    exec("$cmd", $output1);
+    //print($output1[0]);
+
+    $search->result = $search->id.".csv";
+    $search->save();
+    return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'found' => $output1[0]));
+  }
+
+  private function getUrl($url){
+    $url_row = URL::where('url', $url)->get();
+    //echo count($url_row);
+    if(count($url_row)==0){
+      $url_row = URL::create([
+        'url' => $url,
+      ]);
+      $csv_name = $url_row->id . '.csv';
+      fetchPhotos($csv_name, $url);
+      //echo $csv_name;
+      $url_row->csv = $csv_name;
+      $url_row->save();
+    }else{
+      $url_row = $url_row[0];
+      //echo $url_row->id;
+    }
+
+    return $url_row;
+  }
+
+  private function fetchPhotos($csv_name, $url){
+    $csv_name = $url_row->id . '.csv';
+    $pyscript = '../app/python/siam2nite.py';
+    $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/$csv_name";
+    exec("$cmd", $output);
   }
 }

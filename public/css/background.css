@@ -33,3 +33,9 @@
   width: 100%;
   height: auto;
 }
+
+.alert_border{
+  width: 50%;
+  text-align:center;
+  margin: auto;
+}

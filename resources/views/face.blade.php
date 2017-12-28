@@ -48,12 +48,12 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="gender">Gender </label>
-                                    <input type="radio" name="gender" value="male" checked> Male
+                                    <input type="radio" name="gender" value="male"> Male
                                     <input type="radio" name="gender" value="female"> Female
                                   </div>
                                   <div class="form-group">
                                     <label for="name">URL</label>
-                                    <input type="text" name="url" placeholder="Source URL of photos" id="inputName" class="form-control" autofocus>
+                                    <input type="text" name="url" placeholder="Url of Siam2nite's Album or Facebook public page's album" id="inputName" class="form-control" autofocus>
                                   </div>
                                   <input type="hidden" name="photo" value={{$value}}>
                                   <input type="hidden" name="upload_id" value={{$upload_id}}>

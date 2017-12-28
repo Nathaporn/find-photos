@@ -3,6 +3,14 @@
 @section('content')
 <link href="{{ asset('css/background.css') }}" rel="stylesheet">
 
+@if(Session::has('alert-success'))
+<div class="alert_border">
+  <div class="alert alert-success alert-dismissable fade in">
+    {{ session('alert-success') }}
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  </div>
+</div>
+@endif
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -39,7 +47,7 @@
                                   {{ csrf_field() }}
 
                                   <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-trash"></i> Detail
+                                    Detail
                                   </button>
                                 </form>
                               </td>

@@ -25,8 +25,12 @@
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <input type="radio" name="gender" value="male"> Male
-                    <input type="radio" name="gender" value="female"> Female
+                    <input type="radio" name="gender"
+                      <?php if (isset($user->gender) && $user->gender=="male") echo "checked";?>
+                      value="male"> Male
+                    <input type="radio" name="gender"
+                      <?php if (isset($user->gender) && $user->gender=="female") echo "checked";?>
+                      value="female"> Female
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="submit" class="pull-right btn btn-block btn-primary">
