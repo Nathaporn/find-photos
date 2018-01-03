@@ -13,7 +13,7 @@
               <div class="panel-heading"><h4>{{ $search->target->name }} {{ $search->created_at }}</h4></div>
               <div class="panel-body">
                 <h4>Result</h4>
-                We've found {{$found}} photos of your target.
+                We've found {{$output}} photos of your target.
                 <br>
                   <div>
                   <?php
@@ -38,7 +38,7 @@
                 </div>
               </div>
               <div class="panel-body">
-                <form action="{{ route('feedback') }}" method="GET">
+                <form action="{{ route('feedback') }}" method="GET" onsubmit="return confirm('Summitting feedback will sent you to home page, but you can find the result again at your searching history. Are you sure you want to leave this page?');">
                   {{ csrf_field() }}
                   <input type="hidden" name="search_id" value="{{$search->id}}">
                   <input type="hidden" name="from" value="home">

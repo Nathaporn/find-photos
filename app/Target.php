@@ -10,7 +10,7 @@ class Target extends Model
     protected $table = 'targets';
 
     protected $fillable = [
-        'photo','name','age','gender',
+        'photo','name','gender',
     ];
 
     public function search()

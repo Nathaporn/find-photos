@@ -31,6 +31,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+      // $csvN = "10.csv";
+      // $url = "https://www.facebook.com/pg/onyxbkk/photos/?tab=album&album_id=1269385029858946";
+      // $pyscript = '../app/python/getFacebookImages.py';
+      // $cmd = "python $pyscript \"$url\" \"$csvN\"";
+      // print($cmd);
+      // exec("$cmd", $output1);
+      // print($output1[0]);
       // $pyscript = '../app/python/predictSiam2nite.py';
       // $cmd = "python $pyscript 1 4 2.csv 5";
       // exec("$cmd", $output1);
@@ -94,7 +101,6 @@ class HomeController extends Controller
 
             $target = Target::create([
                 'name' => $name,
-                'age' => $age,
                 'gender' => $gender,
             ]);
 
@@ -125,7 +131,7 @@ class HomeController extends Controller
             exec("$cmd", $output);
             //print($output[0]);
 
-            $pyscript = '../app/python/predictSiam2nite.py';
+            $pyscript = '../app/python/predict.py';
             $cmd = "python $pyscript $user->id $target->id $url_row->csv $search->id";
             exec("$cmd", $output1);
             //print($output1[0]);
@@ -133,7 +139,7 @@ class HomeController extends Controller
             $search->result = $search->id.".csv";
             $search->save();
 
-      return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'found' => $output1[0]));
+      return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output1[0]));
   }
 
   public function search_again(Request $request){
@@ -162,7 +168,7 @@ class HomeController extends Controller
 
     $search->result = $search->id.".csv";
     $search->save();
-    return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'found' => $output1[0]));
+    return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output[0]));
   }
 
   private function getUrl($url){
@@ -173,7 +179,8 @@ class HomeController extends Controller
         'url' => $url,
       ]);
       $csv_name = $url_row->id . '.csv';
-      fetchPhotos($csv_name, $url);
+
+      $this->fetchPhotos($csv_name, $url);
       //echo $csv_name;
       $url_row->csv = $csv_name;
       $url_row->save();
@@ -186,9 +193,14 @@ class HomeController extends Controller
   }
 
   private function fetchPhotos($csv_name, $url){
-    $csv_name = $url_row->id . '.csv';
-    $pyscript = '../app/python/siam2nite.py';
-    $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/$csv_name";
-    exec("$cmd", $output);
+    if (strpos($url, 'www.facebook.com') !== false) {
+      $pyscript = '../app/python/getFacebookImages.py';
+      $cmd = "python $pyscript \"$url\" \"$csv_name\"";
+      exec("$cmd", $output1);
+    }else if(strpos($url, 'www.siam2nite.com') !== false){
+      $pyscript = '../app/python/siam2nite.py';
+      $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/$csv_name";
+      exec("$cmd", $output);
+    }
   }
 }

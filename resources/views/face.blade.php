@@ -37,14 +37,10 @@
                               </td>
                               <td>
                               <div>
-                                <form enctype="multipart/form-data" action="/home/result" method="POST">
+                                <form enctype="multipart/form-data" action="/home/search" method="POST">
                                   <div class="form-group">
                                     <label for="name" >Name</label>
                                     <input type="text" name="name" placeholder="Enter Name" id="inputName" class="form-control" placeholder="Your Name" autofocus>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="age">Age</label>
-                                    <input type="number" name="age" placeholder="Enter Age" min=1 id="inputAge" class="form-control" placeholder="Your Age" autofocus>
                                   </div>
                                   <div class="form-group">
                                     <label for="gender">Gender </label>
@@ -52,7 +48,7 @@
                                     <input type="radio" name="gender" value="female"> Female
                                   </div>
                                   <div class="form-group">
-                                    <label for="name">URL</label>
+                                    <label for="name">Source url</label>
                                     <input type="text" name="url" placeholder="Url of Siam2nite's Album or Facebook public page's album" id="inputName" class="form-control" autofocus>
                                   </div>
                                   <input type="hidden" name="photo" value={{$value}}>

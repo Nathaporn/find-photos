@@ -63,7 +63,7 @@
                 <form enctype="multipart/form-data" action="{{ route('search_again') }}" method="POST"
                 onsubmit="return alert('This process must take some time, plese wait.');">
                   <div class="form-group">
-                    <label for="name">URL</label>
+                    <label for="name">Source url</label>
                     <input type="text" name="url" placeholder="Url of Siam2nite's Album or Facebook public page's album" id="inputName" class="form-control" autofocus>
                   </div>
                   <input type="hidden" name="target_id" value="{{ $search->target_id }}">
