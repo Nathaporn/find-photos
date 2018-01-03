@@ -126,20 +126,35 @@ class HomeController extends Controller
               'url_id' => $url_row->id,
             ]);
 
-            $pyscript = '../app/python/training.py';
-            $cmd = "python $pyscript $user->id $target->id";
-            exec("$cmd", $output);
-            //print($output[0]);
-
-            $pyscript = '../app/python/predict.py';
-            $cmd = "python $pyscript $user->id $target->id $url_row->csv $search->id";
-            exec("$cmd", $output1);
-            //print($output1[0]);
-
             $search->result = $search->id.".csv";
             $search->save();
 
-      return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output1[0]));
+      return view('test',array('user' => $user, 'target' => $target, 'search' => $search));
+
+      //return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output1[0]));
+  }
+
+  public function result(){
+    $user_id = $_GET['user_id'];
+    $target_id = $_GET['target_id'];
+    $csvName = $_GET['csvName'];
+    $search_id = $_GET['search_id'];
+
+    $pyscript = '../app/python/training.py';
+    $cmd = "python $pyscript $user_id $target_id";
+    exec("$cmd", $output);
+    //print($output[0]);
+
+    $pyscript = '../app/python/predict.py';
+    $cmd = "python $pyscript $user_id $target_id $csvName $search_id";
+    exec("$cmd", $output1);
+    //print($output1[0]);
+
+    $myObj = array('target' => $target_id, 'search' => $search_id, 'output' => $output1[0]);
+    $myJSON = json_encode($myObj);
+
+    return $myJSON;
+    //return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output1[0]));
   }
 
   public function search_again(Request $request){

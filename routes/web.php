@@ -26,6 +26,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@upload');
 Route::post('/home/search', 'HomeController@search')->name('search');
+Route::get('/home/result', 'HomeController@result')->name('result');
 Route::post('/searchagain', 'HomeController@search_again')->name('search_again');
 
 Route::get('/feedback', 'FeedbackController@index')->name('feedback');
