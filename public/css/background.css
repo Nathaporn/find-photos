@@ -5,6 +5,7 @@
 .panel-heading{
   background-color: #004d99;
 }
+
 #history_table{
   color: #000;
   background-color: #99ceff;
@@ -38,4 +39,13 @@
   width: 50%;
   text-align:center;
   margin: auto;
+}
+
+#loadscreen{
+  background-color: #474e5d;
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  text-align: center;
+  min-height: 100%;
 }

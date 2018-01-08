@@ -150,11 +150,25 @@ class HomeController extends Controller
     exec("$cmd", $output1);
     //print($output1[0]);
 
-    $myObj = array('target' => $target_id, 'search' => $search_id, 'output' => $output1[0]);
+    $arr = array();
+
+    $file = "./users/".$user_id."/targets/".$target_id."/result/".$search_id.".csv";
+    $f = fopen($file,"r");
+    while(! feof($f)){
+      $line = fgetcsv($f);
+      array_push($arr, $line[0]);
+    }
+    $myObj = array('file' => $arr,
+                    'search_id' => $search_id,
+                    'output' => $output1[0]);
     $myJSON = json_encode($myObj);
 
     return $myJSON;
     //return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output1[0]));
+  }
+
+  public function success(){
+    return view('result',array('user' => Auth::user()));
   }
 
   public function search_again(Request $request){
