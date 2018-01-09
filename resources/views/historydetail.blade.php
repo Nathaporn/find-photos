@@ -24,7 +24,7 @@
                       <div>
                         <div>
                         <?php
-                          $file = fopen("./users/".$user->id."/targets/".$search->target_id."/result/".$search->result,"r");
+                          $file = fopen("./targets/".$search->target_id."/result/".$search->result,"r");
 
                           while(! feof($file))
                             {
@@ -53,7 +53,7 @@
                   <input type="hidden" name="search_id" value="{{$search->id}}">
                   <input type="hidden" name="from" value="history">
                     If you want to give us a feedback to improve accuracy rate
-                  <button type="submit" class="btn btn-primary btn-sm">
+                  <button type="submit" class="btn btn-primary btn-sm" <?php if (strcmp($search->feedback, "none") != 0) echo "disabled";?>>
                     Click!
                   </button>
                 </form>

@@ -18,7 +18,7 @@
                     <form action="{{ route('sendFeedback') }}" method="POST">
                       {{ csrf_field() }}
                       <?php
-                        $file = fopen("./users/".$user->id."/targets/".$search->target_id."/result/".$search->result,"r");
+                        $file = fopen("./targets/".$search->target_id."/result/".$search->result,"r");
 
                         while(! feof($file))
                           {

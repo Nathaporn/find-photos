@@ -10,7 +10,7 @@ class Search extends Model
     protected $table = 'search';
 
     protected $fillable = [
-        'user_id','target_id','url_id','result',
+        'user_id','target_id','url_id','result','feedback'
     ];
 
     public function user()

@@ -68,8 +68,8 @@ for filename in glob.glob(path + 'testImage/*.jpg'): # training
 '''
 
 if __name__ == "__main__":
-    uid = sys.argv[1]
-    tid = sys.argv[2]
-    csvName = sys.argv[3]
-    resultCSV = sys.argv[4]
-    predictSiam2nite("%s/users/%s/targets/%s/" % (os.getcwd(),uid,tid),csvName,resultCSV)
+    # uid = sys.argv[1]
+    tid = sys.argv[1]
+    csvName = sys.argv[2]
+    resultCSV = sys.argv[3]
+    predictSiam2nite("%s/targets/%s/" % (os.getcwd(),tid),csvName,resultCSV)

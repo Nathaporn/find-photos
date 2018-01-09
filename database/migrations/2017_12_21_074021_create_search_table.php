@@ -19,6 +19,7 @@ class CreateSearchTable extends Migration
           $table->integer('target_id')->unsigned();
           $table->integer('url_id')->unsigned();
           $table->string('result')->default('not found');
+          $table->string('feedback')->default('none');
           $table->timestamps();
 
           $table->foreign('user_id')

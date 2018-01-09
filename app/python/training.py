@@ -19,9 +19,9 @@ def trainingImage(path):
     face_recognizer.write("%s/train/train.yml" % path)
 
 if __name__ == "__main__":
-    uid = sys.argv[1]
-    tid = sys.argv[2]
+    # uid = sys.argv[1]
+    tid = sys.argv[1]
 
 
-    trainingImage("%s/users/%s/targets/%s/" % (os.getcwd(),uid,tid))
+    trainingImage("%s/targets/%s/" % (os.getcwd(),tid))
     print("finish")

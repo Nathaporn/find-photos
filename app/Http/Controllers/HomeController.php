@@ -11,6 +11,7 @@ use App\Search;
 use App\Target;
 use App\Upload;
 use App\URL;
+use App\Rules\ValidUrl;
 
 class HomeController extends Controller
 {
@@ -57,13 +58,17 @@ class HomeController extends Controller
       $cmd = "python $pyscript 1 19";
       exec("$cmd", $output);
       echo "$output[0]";*/
-
-        return view('home');
+        $user = Auth::user();
+        $search = Search::distinct()->where('user_id', $user->id)->groupBy('target_id')->get(['target_id']);
+        return view('home', array('search' => $search));
     }
 
     public function upload(Request $request){
+        $request->validate([
+          'target_id' => ['require'],
+        ]);
+        $user = Auth::user();
         if($request->hasFile('target')){
-            $user = Auth::user();
             $photo = $request->file('target');
             $filename = time() . '.' . $photo->getClientOriginalExtension();
 
@@ -84,50 +89,54 @@ class HomeController extends Controller
 
             return view('face', array('user' => $user, 'upload_id' => $upload->id, 'output' => $output[0]));
         }
-
-        return view('home');
+        $search = Search::distinct()->where('user_id', $user->id)->groupBy('target_id')->get(['target_id']);
+        return view('home', array('search' => $search));
     }
 
     public function search(Request $request){
-            $user = Auth::user();
-            $photo = $request->input('photo');
-            $name = $request->input('name');
-            $age = $request->input('age');
-            $gender = $request->input('gender');
-            $upload_id = $request->input('upload_id');
-            $url = trim($request->input('url'));
+      $request->validate([
+        'url' => ['required', new ValidUrl],
+        'target_id' => ['require'],
+      ]);
+      $user = Auth::user();
+      $photo = $request->input('photo');
+      $name = $request->input('name');
+      $age = $request->input('age');
+      $gender = $request->input('gender');
+      $upload_id = $request->input('upload_id');
+      $url = trim($request->input('url'));
 
-            $path_splt = explode ("/",$photo);
+      $path_splt = explode ("/",$photo);
 
-            $target = Target::create([
-                'name' => $name,
-                'gender' => $gender,
-            ]);
+      $target = Target::create([
+          'name' => $name,
+          'gender' => $gender,
+      ]);
 
-            $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/train/';
-            File::makeDirectory($path, $mode = 0777, true, true);
-            copy($photo, 'users/'.$user->id.'/targets/'. $target->id . '/train/' . $path_splt[count($path_splt)-1]);
+      $path = public_path().'/targets/'. $target->id . '/train/';
+      File::makeDirectory($path, $mode = 0777, true, true);
+      copy($photo, './targets/'. $target->id . '/train/' . $path_splt[count($path_splt)-1]);
             //Image::make($photo)->save( public_path('users/'.$user->id.'/targets/'. $target->id . '/train/' . $filename ) );
 
-            $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/match/';
-            File::makeDirectory($path, $mode = 0777, true, true);
+      $path = public_path(). '/targets/'. $target->id . '/match/';
+      File::makeDirectory($path, $mode = 0777, true, true);
 
-            $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/unmatch/';
-            File::makeDirectory($path, $mode = 0777, true, true);
+      $path = public_path(). '/targets/'. $target->id . '/unmatch/';
+      File::makeDirectory($path, $mode = 0777, true, true);
 
-            $path = public_path(). '/users/'.$user->id.'/targets/'. $target->id . '/result/';
-            File::makeDirectory($path, $mode = 0777, true, true);
+      $path = public_path(). '/targets/'. $target->id . '/result/';
+      File::makeDirectory($path, $mode = 0777, true, true);
 
-            $url_row = $this->getUrl($url);
+      $url_row = $this->getUrl($url);
 
-            $search = Search::create([
-              'user_id' => $user->id,
-              'target_id' => $target->id,
-              'url_id' => $url_row->id,
-            ]);
+      $search = Search::create([
+        'user_id' => $user->id,
+        'target_id' => $target->id,
+        'url_id' => $url_row->id,
+      ]);
 
-            $search->result = $search->id.".csv";
-            $search->save();
+      $search->result = $search->id.".csv";
+      $search->save();
 
       return view('test',array('user' => $user, 'target' => $target, 'search' => $search));
 
@@ -141,18 +150,18 @@ class HomeController extends Controller
     $search_id = $_GET['search_id'];
 
     $pyscript = '../app/python/training.py';
-    $cmd = "python $pyscript $user_id $target_id";
+    $cmd = "python $pyscript $target_id";
     exec("$cmd", $output);
     //print($output[0]);
 
     $pyscript = '../app/python/predict.py';
-    $cmd = "python $pyscript $user_id $target_id $csvName $search_id";
+    $cmd = "python $pyscript $target_id $csvName $search_id";
     exec("$cmd", $output1);
     //print($output1[0]);
 
     $arr = array();
 
-    $file = "./users/".$user_id."/targets/".$target_id."/result/".$search_id.".csv";
+    $file = "./targets/".$target_id."/result/".$search_id.".csv";
     $f = fopen($file,"r");
     while(! feof($f)){
       $line = fgetcsv($f);
@@ -162,16 +171,15 @@ class HomeController extends Controller
                     'search_id' => $search_id,
                     'output' => $output1[0]);
     $myJSON = json_encode($myObj);
-
+    fclose($f);
     return $myJSON;
     //return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output1[0]));
   }
 
-  public function success(){
-    return view('result',array('user' => Auth::user()));
-  }
-
   public function search_again(Request $request){
+    $request->validate([
+    'url' => ['required', new ValidUrl],
+    ]);
     $user = Auth::user();
     $target_id = $request->input('target_id');
     $target = Target::where('id', $target_id)->first();
@@ -185,19 +193,10 @@ class HomeController extends Controller
       'url_id' => $url_row->id,
     ]);
 
-    $pyscript = '../app/python/training.py';
-    $cmd = "python $pyscript $user->id $target->id";
-    exec("$cmd", $output);
-    //print($output[0]);
-
-    $pyscript = '../app/python/predictSiam2nite.py';
-    $cmd = "python $pyscript $user->id $target->id $url_row->csv $search->id";
-    exec("$cmd", $output1);
-    //print($output1[0]);
-
     $search->result = $search->id.".csv";
     $search->save();
-    return view('result',array('user' => $user, 'target' => $target, 'search' => $search, 'output' => $output[0]));
+
+    return view('test',array('user' => $user, 'target' => $target, 'search' => $search));
   }
 
   private function getUrl($url){

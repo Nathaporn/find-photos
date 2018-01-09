@@ -7,19 +7,15 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
 
+<div class="container-fluid bg-1 text-center" id="loadscreen">
+  <img src="/uploads/avatars/default.jpg" style="width:350px; height:350px; border-radius:50%; " alt="Who">
+  <h3>This process may take a few minutes. Please wait.</h3>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-          <div class="container-fluid bg-1 text-center" id="loadscreen">
-            <div class="title m-b-md">
-                Find the Photos
-            </div>
-            <img src="/uploads/avatars/default.jpg" style="width:350px; height:350px; border-radius:50%; " alt="Who">
-            <h3>This process may take a few minutes. Please wait.</h3>
-          </div>
             <div class="panel">
                 <div class="panel-heading"><h4>Result</h4></div>
-
                 <div class="panel-body" id="result_panel"></div>
                 <div class="panel-body">
                   <form action="{{ route('feedback') }}" method="GET" onsubmit="return confirm('Summitting feedback will sent you to home page, but you can find the result again at your searching history. Are you sure you want to leave this page?');">

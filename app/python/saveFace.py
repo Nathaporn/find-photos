@@ -16,7 +16,7 @@ def saveFace(path):
             cv2.rectangle(image,(x,y),(x+w,y+h),(255,0,0),0)
             roi_gray = gray[y:y+h, x:x+w]
             roi_rgb = image[y:y+h, x:x+w]
-            print (type(roi_gray))
+            # print (type(roi_gray))
             cv2.imwrite("%s/found/%d.jpg" % (path,i) ,roi_rgb)
             i+=1
            #roi_color = image[y:y+h, x:x+w]
