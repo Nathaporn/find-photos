@@ -16,9 +16,15 @@ if __name__ == '__main__':
     csvName = sys.argv[2]
     # print(url)
     # url = "https://www.facebook.com/pg/onyxbkk/photos/?tab=album&album_id=1175154482615335"
+    if("album_id" not in url):
+        print("error")
+        sys.exit()
     album_id = url[url.index('album_id')+9:]
 
     r = requests.get("https://graph.facebook.com/v2.11/%s/photos?fields=images&access_token=904329973077806|1d04e986d4a518aade88f062e8943f21"%album_id)
+    if(r.status_code != 200):
+        print("error")
+        sys.exit()
     # print(r.json()['data'][0]['images'][0]['source'])
     count = 0
     with open('./csv/'+csvName, 'w') as csvfile:

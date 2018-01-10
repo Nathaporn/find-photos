@@ -8,8 +8,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
 
 <div class="container-fluid bg-1 text-center" id="loadscreen">
-  <img src="/uploads/avatars/default.jpg" style="width:350px; height:350px; border-radius:50%; " alt="Who">
+  <img src="/uploads/avatars/default.jpg" style="width:350px; height:350px; border-radius:50%; margin-top: 20px;" alt="Who">
   <h3>This process may take a few minutes. Please wait.</h3>
+  <div class="loader"></div>
 </div>
 <div class="container">
     <div class="row">

@@ -42,10 +42,30 @@
 }
 
 #loadscreen{
-  background-color: #474e5d;
+  background-color: #474e5d; /*474e5d*/
   color: #fff;
   font-family: 'Raleway', sans-serif;
   font-weight: 100;
+  top: 0;
   text-align: center;
   min-height: 100vh;
+}
+
+.loader {
+  position: absolute;
+  left: 45%;
+  margin-top: 30px;
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid blue;
+  border-bottom: 12px solid blue;
+  width: 110px;
+  height: 110px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

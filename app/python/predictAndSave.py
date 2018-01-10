@@ -21,7 +21,7 @@ def predictAndSave(path,csvName):
     i = 0
     with open(path+"/match/"+csvName) as csvfile:
         reader = csv.DictReader(csvfile)
-        imgCount = len(glob.glob(path+'/train/*.jpg'))+1
+        imgCount = len(glob.glob(path+'/train/*.jpg'))
         for row in reader:
             url = row['imagePath']
     # print(url)

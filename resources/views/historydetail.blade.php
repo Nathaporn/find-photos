@@ -15,7 +15,6 @@
                   <div>
                     <h4>Details</h4>
                     Target's name: {{ $search->target->name }} <br>
-                    Target's age: {{ $search->target->age }} <br>
                     Target's gender: {{ $search->target->gender }} <br>
                     Search date: {{ $search->created_at }} <br>
                     Url: {{ $search->url->url }} <br><br>
@@ -60,8 +59,7 @@
               </div>
               <div class="panel-body">
                 <h4>Search Again</h4>
-                <form enctype="multipart/form-data" action="{{ route('search_again') }}" method="POST"
-                onsubmit="return alert('This process must take some time, plese wait.');">
+                <form enctype="multipart/form-data" action="{{ route('search_again') }}" method="POST">
                   <div class="form-group">
                     <label for="name">Source url</label>
                     <input type="text" name="url" placeholder="Url of Siam2nite's Album or Facebook public page's album" id="inputName" class="form-control" autofocus>
@@ -69,6 +67,18 @@
                   <input type="hidden" name="target_id" value="{{ $search->target_id }}">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <input type="submit" value="search" class="pull-right btn btn-block btn-primary">
+                </form>
+              </div>
+              <div class="panel-body">
+                <h4>Add more training photos</h4>
+                <form enctype="multipart/form-data" action="{{ route('multipleUpload') }}" method="POST">
+                  <div class="form-group">
+                    Select images:
+                    <input type="file" name="target[]" multiple>
+                  </div>
+                  <input type="hidden" name="search_id" value="{{ $search->id }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <input type="submit" value="submit" class="pull-right btn btn-block btn-primary">
                 </form>
               </div>
             </div>

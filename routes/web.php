@@ -20,6 +20,8 @@ Route::get('/profile/history/{id}', 'UserController@history_detail');
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::post('/profile', 'UserController@update_profile');
 Route::get('/profile/update', 'UserController@edit_profile')->name('editprofile');
+Route::post('/profile/history/upload', 'UserController@multipleUpload')->name('multipleUpload');
+Route::post('/profile/history/addface', 'UserController@addTrainingPhotos')->name('addFace');
 
 Auth::routes();
 

@@ -64,9 +64,6 @@ class HomeController extends Controller
     }
 
     public function upload(Request $request){
-        $request->validate([
-          'target_id' => ['require'],
-        ]);
         $user = Auth::user();
         if($request->hasFile('target')){
             $photo = $request->file('target');
@@ -108,6 +105,11 @@ class HomeController extends Controller
 
       $path_splt = explode ("/",$photo);
 
+      $url_row = $this->getUrl($url);
+      if($url_row == "error"){
+        return redirect()->back()->withErrors(['Cannot access the url.']);
+      }
+
       $target = Target::create([
           'name' => $name,
           'gender' => $gender,
@@ -126,8 +128,6 @@ class HomeController extends Controller
 
       $path = public_path(). '/targets/'. $target->id . '/result/';
       File::makeDirectory($path, $mode = 0777, true, true);
-
-      $url_row = $this->getUrl($url);
 
       $search = Search::create([
         'user_id' => $user->id,
@@ -208,7 +208,12 @@ class HomeController extends Controller
       ]);
       $csv_name = $url_row->id . '.csv';
 
-      $this->fetchPhotos($csv_name, $url);
+      $res = $this->fetchPhotos($csv_name, $url);
+      if($res=="error"){
+        print("in if");
+        URL::where('url', $url)->delete();
+        return "error";
+      }
       //echo $csv_name;
       $url_row->csv = $csv_name;
       $url_row->save();
@@ -224,11 +229,13 @@ class HomeController extends Controller
     if (strpos($url, 'www.facebook.com') !== false) {
       $pyscript = '../app/python/getFacebookImages.py';
       $cmd = "python $pyscript \"$url\" \"$csv_name\"";
-      exec("$cmd", $output1);
+      exec("$cmd", $output);
+      return $output[0];
     }else if(strpos($url, 'www.siam2nite.com') !== false){
       $pyscript = '../app/python/siam2nite.py';
       $cmd = "scrapy runspider $pyscript -a url=$url -o ./csv/$csv_name";
       exec("$cmd", $output);
+      return $output[0];
     }
   }
 }

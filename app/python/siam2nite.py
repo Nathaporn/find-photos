@@ -12,8 +12,11 @@ class ImageSpider(scrapy.Spider):
         self.start_urls = ['%s' % url]
 
     def parse(self, response):
+        c = 0
         for img in response.css('div.album-gallery.album__grid > a::attr(href)').extract():
+            c = 1
             yield {
                 'imagePath': img
             }
-        print("finish")
+        if(c == 0): print("error")
+        else: print("finish")

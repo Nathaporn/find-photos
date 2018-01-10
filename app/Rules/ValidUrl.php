@@ -25,8 +25,9 @@ class ValidUrl implements Rule
      */
     public function passes($attribute, $value)
     {
-        $is_pass = ((strpos($value, 'www.facebook.com') !== false
-                    or strpos($value, 'www.siam2nite.com') !== false)
+        $facebook = strpos($value, 'www.facebook.com') !== false and strpos($value, 'album_id') !== false;
+        $siam2nite = strpos($value, 'www.siam2nite.com') !== false;
+        $is_pass = (($facebook or $siam2nite)
                     and filter_var($value, FILTER_VALIDATE_URL));
         return $is_pass;
     }
