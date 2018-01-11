@@ -159,17 +159,30 @@ class HomeController extends Controller
     exec("$cmd", $output1);
     //print($output1[0]);
 
+    $unmatch = array();
+    $dir = glob("./targets/$target_id/unmatch/*.csv");
+    foreach ($dir as $key => $value) {
+      $file = fopen($value,"r");
+      while(! feof($file)){
+        $line = fgetcsv($file);
+        array_push($unmatch, $line[0]);
+      }
+      fclose($file);
+    }
+
     $arr = array();
 
     $file = "./targets/".$target_id."/result/".$search_id.".csv";
     $f = fopen($file,"r");
     while(! feof($f)){
       $line = fgetcsv($f);
-      array_push($arr, $line[0]);
+      if(!in_array($line[0], $unmatch) && $line[0] != "" && $line[0] != "url_result"){
+        array_push($arr, $line[0]);
+      }
     }
     $myObj = array('file' => $arr,
                     'search_id' => $search_id,
-                    'output' => $output1[0]);
+                    'output' => count($arr));
     $myJSON = json_encode($myObj);
     fclose($f);
     return $myJSON;

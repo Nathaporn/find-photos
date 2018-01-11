@@ -37,6 +37,7 @@
 <script>
 window.onload = function() {
   $(".panel").hide();
+  $("#body").css("background-color", "#474e5d");
   var target_id = <?php echo $target->id; ?>;
   var search_id = <?php echo $search->id; ?>;
   var csvName = "<?php echo $search->url->csv; ?>";
@@ -58,12 +59,13 @@ window.onload = function() {
     },
     success: function(data) {
       $("#loadscreen").hide();
+      $("#body").css("background-color", "#a6a6a6");
       console.log("success")
       console.log(data);
       var json = $.parseJSON(data);
       console.log(json.output);
       $("#from").attr("value", json.search_id);
-      for (var i = 1; i <= json.output; i++) {
+      for (var i = 0; i < json.output; i++) {
 
         $("#result_panel").append('<div class="thumnails"><a href="" id="atmp" data-fancybox="images" data-caption=""><img class="small_img" src="" alt="" id="tmp"></a></div>');
         document.getElementById("tmp").id = "img"+i;

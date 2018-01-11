@@ -90,7 +90,6 @@ class UserController extends Controller
             $cmd = "python $pyscript $user->id $upload->id";
             exec("$cmd", $output);
 
-            //return view('debug', array('photos' => $photos));
             return view('addface', array('user' => $user, 'upload_id' => $upload->id, 'search' => $search, 'target' => $search->target));
         }
         return redirect('/profile/history/'.$search_id);

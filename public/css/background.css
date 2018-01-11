@@ -12,7 +12,7 @@
 }
 
 #body{
-  background-color: #d9d9d9;
+  background-color: #a6a6a6;
 }
 
 #search_table{
@@ -53,12 +53,13 @@
 
 .loader {
   position: absolute;
-  left: 45%;
+  left: 47%;
+  margin: auto;
   margin-top: 30px;
-  border: 12px solid #f3f3f3;
+  border: 12px solid #474e5d;
   border-radius: 50%;
-  border-top: 12px solid blue;
-  border-bottom: 12px solid blue;
+  border-top: 12px solid #b3daff;
+  border-bottom: 12px solid #b3daff;
   width: 110px;
   height: 110px;
   -webkit-animation: spin 2s linear infinite; /* Safari */

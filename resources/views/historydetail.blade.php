@@ -23,12 +23,23 @@
                       <div>
                         <div>
                         <?php
+                        $unmatch = array();
+                          $dir = glob("./targets/$search->target_id/unmatch/*.csv");
+                          foreach ($dir as $key => $value) {
+                            $file = fopen($value,"r");
+                            while(! feof($file)){
+                              $line = fgetcsv($file);
+                              array_push($unmatch, $line[0]);
+                            }
+                            fclose($file);
+                          }
+
                           $file = fopen("./targets/".$search->target_id."/result/".$search->result,"r");
 
                           while(! feof($file))
                             {
                               $line = fgetcsv($file);
-                              if($line[0] != '' && $line[0] != 'url_result'){
+                              if(!in_array($line[0], $unmatch) && $line[0] != '' && $line[0] != 'url_result'){
                               ?>
                               <div class="thumnails">
                                 <a href="{{$line[0]}}" data-fancybox="images" data-caption="">

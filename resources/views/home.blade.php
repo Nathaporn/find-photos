@@ -5,6 +5,7 @@
 <link href="{{ asset('css/background.css') }}" rel="stylesheet">
 
 @if ($errors->any())
+<div class="alert_border">
     <div class="alert alert-danger alert-dismissable fade in">
         <ul>
             @foreach ($errors->all() as $error)
@@ -13,6 +14,7 @@
         </ul>
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     </div>
+</div>
 @endif
 @if(Session::has('alert-success'))
 <div class="alert_border">
